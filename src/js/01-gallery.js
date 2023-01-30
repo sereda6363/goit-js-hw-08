@@ -1,40 +1,21 @@
+// Описан в документации
+import SimpleLightbox from "simplelightbox";
+// Дополнительный импорт стилей
+import "simplelightbox/dist/simple-lightbox.min.css";
 // Add imports above this line
-import { galleryItems } from './gallery-items';
+import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 console.log(galleryItems);
 
 const galleryEl = document.querySelector(".gallery")
 
-const imageEl = galleryItems.map(elem => `<a class="gallery__item" href="${elem.original}">
+const imageEl = galleryItems.map(elem => `<a class="gallery__link" href="${elem.original}">
     <img
     class="gallery__image"
-    src="${elem.preview}"
-    data-source="${elem.original}"   
+    src="${elem.preview}" 
+    data-source="${elem.original}" 
     alt="${elem.description}"/>
   </a>`).join("");
 galleryEl.insertAdjacentHTML("beforeend", imageEl);
-
-galleryEl.addEventListener('click', onGalleryClick);
-
-function onGalleryClick(evt) {
-  evt.preventDefault()
-  if (evt.target.nodeName !== 'IMG') {
-    return
-  }
-  const dataEl = evt.target.getAttribute('data-source')
-  const modalEl = basicLightbox.create(`
-		<img src="${dataEl}" width="1280">
-	`, {
-		onShow: () => document.body.addEventListener ('keydown', closeEsc),
-		onClose: () => document.body.removeEventListener  ('keydown', closeEsc)
-  })
-  
-  modalEl.show()
-
-  function closeEsc(evt){
-    if (evt.key === 'Escape'){
-      modalEl.close()
-    }
-  }
-}
+new SimpleLightbox(".gallery a",{captionDelay:250, captionPosition:"botton", captionsData:"alt"})
