@@ -24,7 +24,7 @@ function onFormSubmit(e) {
 form.addEventListener('input', throttle(e => {
   formData[e.target.name] = e.target.value;
   localStorage.setItem(LOCALDATA_KEY, JSON.stringify(formData));
-}), 1000)
+}), 500)
 
 function populateTextarea() {
   const savedData = localStorage.getItem(LOCALDATA_KEY)
