@@ -22,17 +22,18 @@ function onFormSubmit(e) {
 }
 
 form.addEventListener('input', throttle(e => {
-  formData[e.target.name] = e.target.value;
+  formData[e.target.name] = [e.target.value];
   localStorage.setItem(LOCALDATA_KEY, JSON.stringify(formData));
-}), 1000)
+}), 500)
 
 function populateTextarea() {
   const savedData = localStorage.getItem(LOCALDATA_KEY)
 
   if (savedData) {
-    const parseSaveData = JSON.parse(savedData)
+    const parseSaveData = JSON.parse(savedData);
+
     Object.entries(parseSaveData).forEach(([name, value]) => {
-      form[name] = value;
+      formData[name] = value;
       form.elements[name].value = value;
     });
   }
